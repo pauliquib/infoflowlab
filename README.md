@@ -9,6 +9,8 @@
 ![PySide6](https://img.shields.io/badge/PySide6-6.5%2B-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
 
+*Veřejný snapshot — vývoj probíhá v privátním repozitáři, historie commitů je zde squashnutá.*
+
 ## Otevřená webová kniha
 
 **InfoFlowLab je kanonická hloubka** pro teorii informace a cvičení. Webová kniha algoritmy **nepřepisuje** — má jen rozcestník:
