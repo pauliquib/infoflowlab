@@ -1,0 +1,6 @@
+PySide6>=6.5.0
+PyQtGraph>=0.13.0
+numpy>=1.24.0
+Pillow>=10.0.0
+soundfile>=0.12.0
+scipy>=1.10.0

@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoFlowLab - Nápověda k propojování prvků</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4ec9b0 0%, #569cd6 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        h2 {
+            color: #569cd6;
+            border-bottom: 2px solid #569cd6;
+            padding-bottom: 10px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            color: #4ec9b0;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .diagram {
+            background: #f5f5f5;
+            border-left: 4px solid #4ec9b0;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .node {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+        
+        .node-source {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .node-encoder {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .node-channel {
+            background: #FF5722;
+            color: white;
+        }
+        
+        .node-ecc {
+            background: #F44336;
+            color: white;
+        }
+        
+        .node-analyzer {
+            background: #00BCD4;
+            color: white;
+        }
+        
+        .node-compressor {
+            background: #FFC107;
+            color: white;
+        }
+        
+        .arrow {
+            color: #764ba2;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #569cd6;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .compatibility-grid {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr);
+            gap: 5px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .grid-cell {
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+            min-width: 60px;
+        }
+        
+        .grid-header {
+            background: #569cd6;
+            color: white;
+        }
+        
+        .grid-yes {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .grid-no {
+            background: #F44336;
+            color: white;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #FF9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .scenario {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #9C27B0;
+        }
+        
+        .scenario h4 {
+            color: #9C27B0;
+            margin-bottom: 10px;
+        }
+        
+        .step {
+            background: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 3px solid #4ec9b0;
+        }
+        
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+            transition: background 0.3s;
+        }
+        
+        .button:hover {
+            background: #45a049;
+        }
+        
+        .toc {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            padding: 5px 0;
+        }
+        
+        .toc a {
+            color: #569cd6;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 InfoFlowLab</h1>
+            <h2>Kompletní návod k propojování prvků</h2>
+            <p>Naučte se jak různě propojovat prvky a čeho při různých kombinacích můžete dosáhnout</p>
+        </div>
+        
+        <div class="content">
+            <div class="toc">
+                <h3>📑 Obsah</h3>
+                <ul>
+                    <li><a href="#zaklady">1. Základy propojování</a></li>
+                    <li><a href="#typy-dat">2. Typy dat a kompatibilita</a></li>
+                    <li><a href="#katalog">3. Katalog prvků a jejich porty</a></li>
+                    <li><a href="#kombinace">4. Užitečné kombinace</a></li>
+                    <li><a href="#scenare">5. Příklady scénářů</a></li>
+                    <li><a href="#tipy">6. Tipy a triky</a></li>
+                    <li><a href="#problemy">7. Řešení problémů</a></li>
+                </ul>
+            </div>
+            
+            <div class="section" id="zaklady">
+                <h2>1. Základy propojování</h2>
+                
+                <h3>1.1 Jak propojit dva prvky</h3>
+                <div class="diagram">
+                    <span class="node node-source">Prvek A</span>
+                    <span class="arrow"> ──────▶ </span>
+                    <span class="node node-encoder">Prvek B</span>
+                    <br><br>
+                    <small>(output) ──────────▶ (input)</small>
+                </div>
+                
+                <div class="info-box">
+                    <strong>Postup:</strong>
+                    <ol>
+                        <li>Klikněte na <strong>výstupní port</strong> (kolečko na pravé straně prvku) - obarví se žlutě</li>
+                        <li><strong>Táhněte myší</strong> - vytvoří se přechodová křivka (Bézierova křivka)</li>
+                        <li><strong>Uvolněte na vstupním portu</strong> (kolečko na levé straně cílového prvku) - propojení je hotové</li>
+                        <li>Stiskněte <strong>Escape</strong> nebo klikněte jinam pro zrušení</li>
+                    </ol>
+                </div>
+                
+                <h3>1.2 Pravidla propojování</h3>
+                <table>
+                    <tr>
+                        <th>Pravidlo</th>
+                        <th>Popis</th>
+                        <th>Příklad</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Směr</strong></td>
+                        <td>Vždy <code>output → input</code></td>
+                        <td>Výstup zdroje → Vstup kompresoru</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Žádné smyčky</strong></td>
+                        <td>Nemůžete propojit prvek sám se sebou</td>
+                        <td>Node A → Node A ❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jeden vstup</strong></td>
+                        <td>Vstupní port může mít jen jednu spojení</td>
+                        <td>Nelze Node A → Node B a zároveň Node C → Node B</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Více výstupů</strong></td>
+                        <td>Výstupní port může mít mnoho spojení</td>
+                        <td>Node A → Node B, Node A → Node C ✓</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kompatibilita dat</strong></td>
+                        <td>Porty musí být kompatibilní</td>
+                        <td>TEXT → BINARY ✓, AUDIO → TEXT ❌</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="section" id="typy-dat">
+                <h2>2. Typy dat a kompatibilita</h2>
+                
+                <h3>2.1 Dostupné datové typy</h3>
+                <table>
+                    <tr>
+                        <th>Typ</th>
+                        <th>Zkratka</th>
+                        <th>Popis</th>
+                        <th>Příklady</th>
+                    </tr>
+                    <tr>
+                        <td><strong>BINARY</strong></td>
+                        <td>BIN</td>
+                        <td>Čistá binární data (bytes)</td>
+                        <td>Komprimovaná data, šifrový text</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TEXT</strong></td>
+                        <td>TXT</td>
+                        <td>Textová data (UTF-8/ASCII)</td>
+                        <td>"Hello World", čísla v textové podobě</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AUDIO</strong></td>
+                        <td>AUD</td>
+                        <td>Zvuková data</td>
+                        <td>WAV, MP3, sinusoida</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IMAGE</strong></td>
+                        <td>IMG</td>
+                        <td>Obrázková data</td>
+                        <td>PNG, JPEG, pixely</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NUMERIC</strong></td>
+                        <td>NUM</td>
+                        <td>Číselná data</td>
+                        <td>"255", "10110" (číslo v soustavě)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MORSE</strong></td>
+                        <td>MOR</td>
+                        <td>Morseův kód</td>
+                        <td>".- -... -.-."</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HUFFMAN</strong></td>
+                        <td>HUF</td>
+                        <td>Huffmanovo kódování</td>
+                        <td>Binární řetězec s kódovou tabulkou</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BASE64</strong></td>
+                        <td>B64</td>
+                        <td>Base64 kódování</td>
+                        <td>"SGVsbG8="</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HEX</strong></td>
+                        <td>HEX</td>
+                        <td>Hexadecimální kódování</td>
+                        <td>"48656C6C6F"</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ANY</strong></td>
+                        <td>ANY</td>
+                        <td>Kompatibilní s čímkoli</td>
+                        <td>Kanály, analyzátory</td>
+                    </tr>
+                </table>
+                
+                <h3>2.2 Maticí kompatibility</h3>
+                <div class="compatibility-grid">
+                    <div class="grid-cell grid-header"></div>
+                    <div class="grid-cell grid-header">BIN</div>
+                    <div class="grid-cell grid-header">TXT</div>
+                    <div class="grid-cell grid-header">AUD</div>
+                    <div class="grid-cell grid-header">IMG</div>
+                    <div class="grid-cell grid-header">NUM</div>
+                    <div class="grid-cell grid-header">MOR</div>
+                    <div class="grid-cell grid-header">HUF</div>
+                    <div class="grid-cell grid-header">B64</div>
+                    <div class="grid-cell grid-header">HEX</div>
+                    <div class="grid-cell grid-header">ANY</div>
+                    
+                    <div class="grid-cell grid-header">BIN</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    
+                    <div class="grid-cell grid-header">TXT</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    
+                    <div class="grid-cell grid-header">AUD</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    
+                    <div class="grid-cell grid-header">IMG</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    
+                    <div class="grid-cell grid-header">NUM</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    
+                    <div class="grid-cell grid-header">MOR</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    
+                    <div class="grid-cell grid-header">HUF</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    
+                    <div class="grid-cell grid-header">B64</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    
+                    <div class="grid-cell grid-header">HEX</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-no">✗</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    
+                    <div class="grid-cell grid-header">ANY</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                    <div class="grid-cell grid-yes">✓</div>
+                </div>
+            </div>
+            
+            <div class="section" id="katalog">
+                <h2>3. Katalog prvků a jejich porty</h2>
+                
+                <h3>3.1 Zdroje dat (Sources)</h3>
+                <table>
+                    <tr>
+                        <th>Ikona</th>
+                        <th>Název</th>
+                        <th>Výstup</th>
+                        <th>Popis</th>
+                    </tr>
+                    <tr>
+                        <td>📝</td>
+                        <td><strong>Textový editor</strong></td>
+                        <td><code>TEXT</code></td>
+                        <td>Zadejte libovolný text</td>
+                    </tr>
+                    <tr>
+                        <td>🎲</td>
+                        <td><strong>Náhodný generátor</strong></td>
+                        <td><code>BINARY</code></td>
+                        <td>Generuje data s nastavitelnou entropií</td>
+                    </tr>
+                    <tr>
+                        <td>🔢</td>
+                        <td><strong>Číslo</strong></td>
+                        <td><code>NUMERIC</code></td>
+                        <td>Číslo v libovolné soustavě (2-36)</td>
+                    </tr>
+                    <tr>
+                        <td>🎵</td>
+                        <td><strong>Audio</strong></td>
+                        <td><code>AUDIO</code></td>
+                        <td>Zvuková data (testovací tón)</td>
+                    </tr>
+                    <tr>
+                        <td>🖼️</td>
+                        <td><strong>Obrázek</strong></td>
+                        <td><code>IMAGE</code></td>
+                        <td>Testovací obrázek (gradient)</td>
+                    </tr>
+                </table>
+                
+                <h3>3.2 Kódování (Encoders)</h3>
+                <table>
+                    <tr>
+                        <th>Ikona</th>
+                        <th>Název</th>
+                        <th>Vstup</th>
+                        <th>Výstup</th>
+                        <th>Popis</th>
+                    </tr>
+                    <tr>
+                        <td>🔀</td>
+                        <td><strong>BaseConv</strong></td>
+                        <td><code>NUMERIC</code></td>
+                        <td><code>TEXT</code></td>
+                        <td>Převod mezi číslenými soustavami (2-36)</td>
+                    </tr>
+                    <tr>
+                        <td>🔤</td>
+                        <td><strong>UTF-8 Enc</strong></td>
+                        <td><code>TEXT</code></td>
+                        <td><code>BINARY</code></td>
+                        <td>Zakóduje text do UTF-8 bytů</td>
+                    </tr>
+                    <tr>
+                        <td>📻</td>
+                        <td><strong>Morse</strong></td>
+                        <td><code>TEXT</code></td>
+                        <td><code>MORSE</code></td>
+                        <td>Zakóduje text do Morseovy abecedy</td>
+                    </tr>
+                    <tr>
+                        <td>🌳</td>
+                        <td><strong>HuffmanEnc</strong></td>
+                        <td><code>TEXT</code></td>
+                        <td><code>HUFFMAN</code></td>
+                        <td>Huffmanovo kódování s kompresí</td>
+                    </tr>
+                    <tr>
+                        <td>🔐</td>
+                        <td><strong>Base64</strong></td>
+                        <td><code>BINARY</code></td>
+                        <td><code>BASE64</code></td>
+                        <td>Base64 kódování</td>
+                    </tr>
+                    <tr>
+                        <td>🔢</td>
+                        <td><strong>Hex</strong></td>
+                        <td><code>BINARY</code></td>
+                        <td><code>HEX</code></td>
+                        <td>Hexadecimální kódování</td>
+                    </tr>
+                </table>
+                
+                <h3>3.3 Komprese (Compressors)</h3>
+                <table>
+                    <tr>
+                        <th>Ikona</th>
+                        <th>Název</th>
+                        <th>Vstup</th>
+                        <th>Výstup</th>
+                        <th>Popis</th>
+                    </tr>
+                    <tr>
+                        <td>📏</td>
+                        <td><strong>RLE</strong></td>
+                        <td><code>BINARY</code></td>
+                        <td><code>BINARY</code></td>
+                        <td>Run-Length Encoding (komprese/dekomprese)</td>
+                    </tr>
+                    <tr>
+                        <td>🗜️</td>
+                        <td><strong>LZ77</strong></td>
+                        <td><code>BINARY</code></td>
+                        <td><code>BINARY</code></td>
+                        <td>LZ77 s nastavitelným oknem</td>
+                    </tr>
+                    <tr>
+                        <td>🗜️</td>
+                        <td><strong>LZW</strong></td>
+                        <td><code>BINARY</code></td>
+                        <td><code>BINARY</code></td>
+                        <td>LZW slovníková komprese</td>
+                    </tr>
+                    <tr>
+                        <td>🌳</td>
+                        <td><strong>Huffman</strong></td>
+                        <td><code>BINARY</code></td>
+                        <td><code>BINARY</code></td>
+                        <td>Huffmanova komprese</td>
+                    </tr>
+                </table>
+                
+                <h3>3.4 Kanály (Channels)</h3>
+                <table>
+                    <tr>
+                        <th>Ikona</th>
+                        <th>Název</th>
+                        <th>Vstup/Výstup</th>
+                        <th>Popis</th>
+                    </tr>
+                    <tr>
+                        <td>🔌</td>
+                        <td><strong>Ideal</strong></td>
+                        <td><code>ANY → ANY</code></td>
+                        <td>Ideální kanál (pouze latence)</td>
+                    </tr>
+                    <tr>
+                        <td>📡</td>
+                        <td><strong>BSK</strong></td>
+                        <td><code>ANY → ANY</code></td>
+                        <td>Binární symetrický kanál (šum)</td>
+                    </tr>
+                    <tr>
+                        <td>📡</td>
+                        <td><strong>Gilbert-Elliott</strong></td>
+                        <td><code>ANY → ANY</code></td>
+                        <td>Kanál s nárazy chyb</td>
+                    </tr>
+                    <tr>
+                        <td>📡</td>
+                        <td><strong>AWGN</strong></td>
+                        <td><code>ANY → ANY</code></td>
+                        <td>Kanál s Gaussovým šumem</td>
+                    </tr>
+                </table>
+                
+                <h3>3.5 Oprava chyb (ECC)</h3>
+                <table>
+                    <tr>
+                        <th>Ikona</th>
+                        <th>Název</th>
+                        <th>Vstup</th>
+                        <th>Výstup</th>
+                        <th>Popis</th>
+                    </tr>
+                    <tr>
+                        <td>🔴</td>
+                        <td><strong>Hamming(7,4)</strong></td>
+                        <td><code>BINARY</code></td>
+                        <td><code>BINARY</code></td>
+                        <td>Kódování/dekódování Hamming(7,4)</td>
+                    </tr>
+                    <tr>
+                        <td>🔴</td>
+                        <td><strong>Hamming(15,11)</strong></td>
+                        <td><code>BINARY</code></td>
+                        <td><code>BINARY</code></td>
+                        <td>Kódování/dekódování Hamming(15,11)</td>
+                    </tr>
+                    <tr>
+                        <td>🔴</td>
+                        <td><strong>CRC-8/16/32</strong></td>
+                        <td><code>BINARY</code></td>
+                        <td><code>BINARY</code></td>
+                        <td>Kontrolní součet CRC</td>
+                    </tr>
+                    <tr>
+                        <td>🔴</td>
+                        <td><strong>ParityEnc/Dec</strong></td>
+                        <td><code>BINARY</code></td>
+                        <td><code>BINARY</code></td>
+                        <td>Parnostní bity (sudá/lichá)</td>
+                    </tr>
+                </table>
+                
+                <h3>3.6 Analyzátory (Analyzers)</h3>
+                <table>
+                    <tr>
+                        <th>Ikona</th>
+                        <th>Název</th>
+                        <th>Vstup</th>
+                        <th>Výstup</th>
+                        <th>Popis</th>
+                    </tr>
+                    <tr>
+                        <td>📊</td>
+                        <td><strong>Entropie</strong></td>
+                        <td><code>ANY</code></td>
+                        <td><code>ANY</code></td>
+                        <td>Měření Shannonovy entropie</td>
+                    </tr>
+                    <tr>
+                        <td>📈</td>
+                        <td><strong>Histogram</strong></td>
+                        <td><code>ANY</code></td>
+                        <td><code>ANY</code></td>
+                        <td>Frekvenční histogram symbolů</td>
+                    </tr>
+                    <tr>
+                        <td>📊</td>
+                        <td><strong>CompRatio</strong></td>
+                        <td><code>ANY</code></td>
+                        <td><code>ANY</code></td>
+                        <td>Měření kompresního poměru</td>
+                    </tr>
+                    <tr>
+                        <td>📊</td>
+                        <td><strong>BER Meter</strong></td>
+                        <td><code>ANY</code></td>
+                        <td><code>ANY</code></td>
+                        <td>Měření bitové chybovosti</td>
+                    </tr>
+                    <tr>
+                        <td>⏱️</td>
+                        <td><strong>LatencyMeter</strong></td>
+                        <td><code>ANY</code></td>
+                        <td><code>ANY</code></td>
+                        <td>Měření zpoždění</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="section" id="kombinace">
+                <h2>4. Užitečné kombinace</h2>
+                
+                <div class="scenario">
+                    <h4>🎯 Základní: Text → Komprese → Kanál → Dekomprese → Text</h4>
+                    <div class="diagram">
+                        <span class="node node-source">📝 Text</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-compressor">🌳 HuffmanEnc</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-channel">📡 BSK</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-compressor">🌳 HuffmanDec</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-source">📝 Text</span>
+                    </div>
+                    <p><strong>Co se stane:</strong> Text se komprimuje, projde šumovým kanálem a dekomprimuje se.</p>
+                    <p><strong>Co pozorovat:</strong> Kompresní poměr, počet chyb, entropii před/po kompresi.</p>
+                </div>
+                
+                <div class="scenario">
+                    <h4>🎯 Základní: Číslo → Převod soustavy</h4>
+                    <div class="diagram">
+                        <span class="node node-source">🔢 Číslo (255₁₀)</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-encoder">🔀 BaseConv (10→2)</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-analyzer">📊 Analyzátor</span>
+                    </div>
+                    <p><strong>Výstup:</strong> "11111111" (binární)</p>
+                    <p><strong>Možné varianty:</strong> 10→8, 10→16, 2→16, atd.</p>
+                </div>
+                
+                <div class="scenario">
+                    <h4>⚙️ Středně pokročilý: Komprese + ECC (oprava chyb)</h4>
+                    <div class="diagram">
+                        <span class="node node-source">📝 Text</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-compressor">🌳 Huffman</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-ecc">🔴 Hamming(7,4)</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-channel">📡 BSK</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-ecc">🔴 HammingDec</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-compressor">🌳 HuffmanDec</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-source">📝 Text</span>
+                    </div>
+                    <p><strong>Výhoda:</strong> Kombinace komprese + ECC je velmi účinná pro přenos přes šumové kanály.</p>
+                </div>
+                
+                <div class="scenario">
+                    <h4>🔥 Pokročilý: Kompletní komunikační řetězec</h4>
+                    <div class="diagram">
+                        <span class="node node-source">📝 "Hello"</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-encoder">🔤 UTF-8Enc</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-compressor">🌳 Huffman</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-ecc">🔴 Hamming(7,4)</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-channel">📡 BSK</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-ecc">🔴 HammingDec</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-compressor">🌳 HuffmanDec</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-encoder">🔤 UTF-8Dec</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-source">📝 Výstup</span>
+                    </div>
+                    <p><strong>Postup transformace:</strong></p>
+                    <ol>
+                        <li>Text → UTF-8 kódování → BINARY (40 bitů)</li>
+                        <li>BINARY → Huffman komprese → HUFFMAN (25 bitů, poměr 1.6:1)</li>
+                        <li>HUFFMAN → Hamming kódování → BINARY (35 bitů, přidáno 10 bitů ECC)</li>
+                        <li>BINARY → BSK kanál (p=0.05) → BINARY (možná s chybami)</li>
+                        <li>BINARY → Hamming dekódování → BINARY (opraveny chyby)</li>
+                        <li>BINARY → Huffman dekomprese → BINARY (40 bitů)</li>
+                        <li>BINARY → UTF-8 dekódování → TEXT ("Hello")</li>
+                    </ol>
+                </div>
+                
+                <div class="scenario">
+                    <h4>📊 Srovnání kompresních algoritmů</h4>
+                    <div class="diagram">
+                        <span class="node node-source">📝 Text</span>
+                        <span class="arrow"> ──┬─→ </span>
+                        <span class="node node-compressor">📏 RLE</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-analyzer">📊 CompRatio</span>
+                        <br>
+                        <span class="arrow">             ├─→ </span>
+                        <span class="node node-compressor">🗜️ LZ77</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-analyzer">📊 CompRatio</span>
+                        <br>
+                        <span class="arrow">             └─→ </span>
+                        <span class="node node-compressor">🌳 Huffman</span>
+                        <span class="arrow"> ──→ </span>
+                        <span class="node node-analyzer">📊 CompRatio</span>
+                    </div>
+                    <p><strong>Co pozorovat:</strong></p>
+                    <ul>
+                        <li>RLE: Dobré pro opakující se data (AAAAAA)</li>
+                        <li>LZ77: Dobré pro text s opakujícími se vzory</li>
+                        <li>Huffman: Dobré pro data s nerovnoměrnou frekvencí</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section" id="scenare">
+                <h2>5. Příklady scénářů</h2>
+                
+                <div class="scenario">
+                    <h4>📚 Scénář 1: Procvičení převodů soustav</h4>
+                    <div class="step">
+                        <strong>Krok 1:</strong> Přetáhněte <span class="node node-source">🔢 Číslo</span> na plátno
+                    </div>
+                    <div class="step">
+                        <strong>Krok 2:</strong> Nastavte: <code>value=255</code>, <code>base=10</code>
+                    </div>
+                    <div class="step">
+                        <strong>Krok 3:</strong> Přetáhněte <span class="node node-encoder">🔀 BaseConv</span>
+                    </div>
+                    <div class="step">
+                        <strong>Krok 4:</strong> Nastavte: <code>from_base=10</code>, <code>to_base=2</code>
+                    </div>
+                    <div class="step">
+                        <strong>Krok 5:</strong> Propojte je a spusťte simulaci
+                    </div>
+                    <div class="success-box">
+                        <strong>Výsledek:</strong> Číslo 255 se převede na "11111111" (binární)
+                    </div>
+                </div>
+                
+                <div class="scenario">
+                    <h4>📊 Scénář 2: Porozumění entropii</h4>
+                    <div class="step">
+                        <strong>Krok 1:</strong> Přetáhněte <span class="node node-source">🎲 Random</span>
+                    </div>
+                    <div class="step">
+                        <strong>Krok 2:</strong> Nastavte: <code>entropy_target=0.0</code> (všechna "A")
+                    </div>
+                    <div class="step">
+                        <strong>Krok 3:</strong> Přetáhněte <span class="node node-analyzer">📊 Entropie</span>
+                    </div>
+                    <div class="step">
+                        <strong>Krok 4:</strong> Propojte a spusťte
+                    </div>
+                    <div class="success-box">
+                        <strong>Výsledek:</strong> H(X) ≈ 0.0 bitů (všechna data stejná)
+                    </div>
+                    <p><strong>Experimenty:</strong></p>
+                    <ul>
+                        <li><code>entropy_target=8.0</code> (náhodná data) → H(X) ≈ 8.0 bitů</li>
+                        <li><code>entropy_target=4.0</code> (písmena a číslice) → H(X) ≈ 5.5 bitů</li>
+                    </ul>
+                </div>
+                
+                <div class="scenario">
+                    <h4>🔧 Scénář 3: Chyby v komunikaci</h4>
+                    <div class="step">
+                        <strong>Krok 1:</strong> Vytvořte text: "Test"
+                    </div>
+                    <div class="step">
+                        <strong>Krok 2:</strong> Přidejte <span class="node node-encoder">🔤 UTF-8 Enc</span>
+                    </div>
+                    <div class="step">
+                        <strong>Krok 3:</strong> Přidejte <span class="node node-ecc">🔴 Hamming(7,4) Enc</span>
+                    </div>
+                    <div class="step">
+                        <strong>Krok 4:</strong> Přidejte <span class="node node-channel">📡 BSK</span> s <code>error_prob=0.1</code>
+                    </div>
+                    <div class="step">
+                        <strong>Krok 5:</strong> Přidejte <span class="node node-ecc">🔴 Hamming(7,4) Dec</span>
+                    </div>
+                    <div class="step">
+                        <strong>Krok 6:</strong> Přidejte <span class="node node-analyzer">📊 BER Meter</span>
+                    </div>
+                    <div class="success-box">
+                        <strong>Výsledek:</strong> Hamming opraví většinu chyb (1 bit na 7), BER po opravě bude mnohem nižší
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section" id="tipy">
+                <h2>6. Tipy a triky</h2>
+                
+                <div class="info-box">
+                    <h3>💡 Rychlé propojování</h3>
+                    <p>Můžete táhnout z výstupu na vstup i naopak. Systém automaticky rozpozná směr.</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>🔄 Paralelní zpracování</h3>
+                    <p>Můžete porovnávat různé vstupy nebo algoritmy současně:</p>
+                    <div class="diagram">
+                        <span class="node node-source">📝 Text1</span> <span class="arrow"> ──→ </span> <span class="node node-compressor">🌳 Huffman</span> <span class="arrow"> ──→ </span> <span class="node node-analyzer">📊 CompRatio</span><br>
+                        <span class="node node-source">📝 Text2</span> <span class="arrow"> ──→ </span> <span class="node node-compressor">🌳 Huffman</span> <span class="arrow"> ──→ </span> <span class="node node-analyzer">📊 CompRatio</span>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3>🔗 Zřetězení analyzátorů</h3>
+                    <p>Každý analyzátor přidá další metriky do historie paketu:</p>
+                    <div class="diagram">
+                        <span class="node node-source">📝 Text</span> <span class="arrow"> ──→ </span>
+                        <span class="node node-compressor">🌳 Huffman</span> <span class="arrow"> ──→ </span>
+                        <span class="node node-analyzer">📊 CompRatio</span> <span class="arrow"> ──→ </span>
+                        <span class="node node-analyzer">📊 Entropie</span> <span class="arrow"> ──→ </span>
+                        <span class="node node-analyzer">📈 Histogram</span>
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <h3>⚙️ Užitečné parametry</h3>
+                    <ul>
+                        <li><strong>BSK kanál:</strong> <code>error_prob</code> (0.0 - 1.0) - pravděpodobnost chyby</li>
+                        <li><strong>LZ77:</strong> <code>window_size</code> (128 - 32768) - velikost vyhledávacího okna</li>
+                        <li><strong>Huffman:</strong> Automaticky vypočítá optimální kódy</li>
+                        <li><strong>BaseConv:</strong> <code>from_base</code>, <code>to_base</code> (2 - 36)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section" id="problemy">
+                <h2>7. Řešení problémů</h2>
+                
+                <div class="scenario">
+                    <h4>❌ Nemůžu propojit dva prvky</h4>
+                    <p><strong>Příčiny:</strong></p>
+                    <ul>
+                        <li>Nekompatibilní datové typy - zkontrolujte barvy portů</li>
+                        <li>Už je spojení - vstupní port může mít jen jedno spojení</li>
+                        <li>Smyčka - nemůžete propojit prvek sám se sebou</li>
+                    </ul>
+                    <p><strong>Řešení:</strong> Klikněte na port pro zobrazení tooltipu s důvodem</p>
+                </div>
+                
+                <div class="scenario">
+                    <h4>❌ Spojení se neobjeví</h4>
+                    <p><strong>Příčiny:</strong></p>
+                    <ul>
+                        <li>Oba prvky nejsou na plátně</li>
+                        <li>Porty jsou skryté (přiblížili jste se příliš)</li>
+                        <li>Chyba v validaci</li>
+                    </ul>
+                    <p><strong>Řešení:</strong> Přiblížte/oddalte pohled (scroll nebo Ctrl+scroll)</p>
+                </div>
+                
+                <div class="scenario">
+                    <h4>❌ Simulace nefunguje</h4>
+                    <p><strong>Příčiny:</strong></p>
+                    <ul>
+                        <li>Chybí vstupní zdroj</li>
+                        <li>Prvky nejsou propojené</li>
+                        <li>Chyba v algoritmu</li>
+                    </ul>
+                    <p><strong>Řešení:</strong> Zkontrolujte, že máte zdroj (📝, 🎲, atd.) a spojení</p>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>8. Nejčastější kombinace</h2>
+                
+                <h3>Pro začátečníky</h3>
+                <div class="diagram">
+                    <span class="node node-source">📝 Text</span> <span class="arrow"> ──→ </span> <span class="node node-analyzer">📊 Entropie</span>
+                </div>
+                
+                <h3>Pro středně pokročilé</h3>
+                <div class="diagram">
+                    <span class="node node-source">📝 Text</span> <span class="arrow"> ──→ </span>
+                    <span class="node node-compressor">🌳 Huffman</span> <span class="arrow"> ──→ </span>
+                    <span class="node node-analyzer">📊 CompRatio</span>
+                </div>
+                
+                <h3>Pro pokročilé</h3>
+                <div class="diagram">
+                    <span class="node node-source">📝 Text</span> <span class="arrow"> ──→ </span>
+                    <span class="node node-compressor">📏 RLE</span> <span class="arrow"> ──→ </span>
+                    <span class="node node-compressor">🗜️ LZ77</span> <span class="arrow"> ──→ </span>
+                    <span class="node node-compressor">🌳 Huffman</span> <span class="arrow"> ──→ </span>
+                    <span class="node node-ecc">🔴 Hamming</span> <span class="arrow"> ──→ </span>
+                    <span class="node node-channel">📡 Gilbert-Elliott</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>InfoFlowLab v1.0 - Simulátor komprese a komunikace</p>
+            <p style="opacity: 0.7;">Poslední aktualizace: 28. 6. 2026</p>
+            <p style="margin-top: 10px;">
+                <a href="NAPOVEDA_PROPOJENI.md" style="color: #4ec9b0; text-decoration: none;">
+                    📄 Verze jako Markdown soubor
+                </a>
+            </p>
+            <p style="margin-top: 10px;">
+                <a href="KATALOG_PRVKU.html" style="color: #4ec9b0; text-decoration: none; font-weight: bold;">
+                    📚 Kompletní katalog všech prvků
+                </a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

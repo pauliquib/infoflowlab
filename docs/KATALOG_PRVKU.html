@@ -1,0 +1,1917 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfoFlowLab - Katalog prvků</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4ec9b0 0%, #569cd6 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        h2 {
+            color: #569cd6;
+            border-bottom: 2px solid #569cd6;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        h3 {
+            color: #4ec9b0;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .category {
+            background: #f5f5f5;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            border-left: 4px solid #4ec9b0;
+        }
+        
+        .category-title {
+            font-size: 1.8em;
+            color: #569cd6;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .node-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .node-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .node-icon {
+            font-size: 2.5em;
+            margin-right: 15px;
+        }
+        
+        .node-title {
+            flex: 1;
+        }
+        
+        .node-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .node-type {
+            font-size: 0.9em;
+            color: #888;
+            font-style: italic;
+        }
+        
+        .node-description {
+            color: #555;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .node-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .detail-box {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 5px;
+            border-left: 3px solid #569cd6;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            color: #569cd6;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+        
+        .detail-content {
+            color: #333;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        
+        .parameters {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #FF9800;
+        }
+        
+        .parameters-title {
+            font-weight: bold;
+            color: #FF9800;
+            margin-bottom: 10px;
+        }
+        
+        .param-item {
+            background: white;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            border-left: 3px solid #FF9800;
+        }
+        
+        .param-name {
+            font-weight: bold;
+            color: #333;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .param-details {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 3px;
+        }
+        
+        .data-type {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 0.85em;
+            margin: 2px;
+        }
+        
+        .type-binary { background: #FF5722; color: white; }
+        .type-text { background: #4CAF50; color: white; }
+        .type-audio { background: #9C27B0; color: white; }
+        .type-image { background: #00BCD4; color: white; }
+        .type-numeric { background: #FFC107; color: white; }
+        .type-morse { background: #795548; color: white; }
+        .type-huffman { background: #607D8B; color: white; }
+        .type-base64 { background: #E91E63; color: white; }
+        .type-hex { background: #3F51B5; color: white; }
+        .type-any { background: #9E9E9E; color: white; }
+        
+        .toc {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .toc h3 {
+            margin-top: 0;
+            color: #569cd6;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            padding: 5px 0;
+        }
+        
+        .toc a {
+            color: #569cd6;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .back-link:hover {
+            background: #45a049;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 InfoFlowLab</h1>
+            <h2>Kompletní katalog všech prvků</h2>
+            <p>Detailní popis všech dostupných prvků, jejich parametrů a funkcí</p>
+        </div>
+        
+        <div class="content">
+            <div class="toc">
+                <h3>📑 Obsah</h3>
+                <ul>
+                    <li><a href="#zdroje">1. Zdroje dat (Sources)</a></li>
+                    <li><a href="#kodovace">2. Kódovače (Encoders)</a></li>
+                    <li><a href="#dekodovace">3. Dekódovače (Decoders)</a></li>
+                    <li><a href="#komprese">4. Komprese (Compressors)</a></li>
+                    <li><a href="#kanaly">5. Kanály (Channels)</a></li>
+                    <li><a href="#ecc">6. Oprava chyb (ECC)</a></li>
+                    <li><a href="#analyza">7. Analyzátory (Analyzers)</a></li>
+                    <li><a href="#vystupy">8. Výstupy (Sinks)</a></li>
+                    <li><a href="#kontrolni">9. Kontrolní číslice (Checksums)</a></li>
+                </ul>
+            </div>
+            
+            <!-- ZDROJE DAT -->
+            <div class="category" id="zdroje">
+                <div class="category-title">📝 1. Zdroje dat (Sources)</div>
+                <p style="margin-bottom: 20px; color: #666;">Zdroje dat generují vstupní data pro simulaci. Všechny zdroje mají výstupní port.</p>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📝</div>
+                        <div class="node-title">
+                            <div class="node-name">Textový editor</div>
+                            <div class="node-type">TextSourceNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Zadejte libovolný text jako zdroj dat pro simulaci.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Zdroje (Sources)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">text</div>
+                            <div class="param-details">Typ: TEXT | Výchozí: "Hello World!" | Textová data pro odeslání</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">encoding</div>
+                            <div class="param-details">Typ: VOLBA | Výchozí: utf-8 | Možnosti: utf-8, ascii, utf-16, iso-8859-2 | Znaková sada</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🎲</div>
+                        <div class="node-title">
+                            <div class="node-name">Náhodný generátor</div>
+                            <div class="node-type">RandomSourceNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Generuje náhodná binární data s nastavitelnou entropií.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Zdroje (Sources)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">length</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 100 | Rozsah: 1-10000 | Počet bajtů k vygenerování</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">entropy_target</div>
+                            <div class="param-details">Typ: FLOAT | Výchozí: 4.0 | Rozsah: 0.0-8.0 | Krok: 0.5 | Cílová entropie v bitech/bajt (0=konstantní, 8=random)</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">seed</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 0 | Rozsah: 0-999999 | 0 = bez seedu (náhodné)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔢</div>
+                        <div class="node-title">
+                            <div class="node-name">Číslo</div>
+                            <div class="node-type">NumberInputNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Číselná hodnota v libovolné soustavě (2-36).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-numeric">NUMERIC</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Zdroje (Sources)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">value</div>
+                            <div class="param-details">Typ: TEXT | Výchozí: "255" | Číselná hodnota jako řetězec</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">base</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 10 | Rozsah: 2-36 | Základ číselné soustavy</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">label</div>
+                            <div class="param-details">Typ: TEXT | Výchozí: "" | Volitelný popisek pro zobrazení</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🎵</div>
+                        <div class="node-title">
+                            <div class="node-name">Audio</div>
+                            <div class="node-type">AudioSourceNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Zvuková data (testovací tón 440 Hz).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-audio">AUDIO</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Zdroje (Sources)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">file_path</div>
+                            <div class="param-details">Typ: TEXT | Výchozí: "" | Cesta k WAV/MP3 souboru</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">sample_rate</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 44100 | Rozsah: 8000-192000 | Vzorkovací frekvence v Hz</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🖼️</div>
+                        <div class="node-title">
+                            <div class="node-name">Obrázek</div>
+                            <div class="node-type">ImageSourceNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Testovací obrázek (gradient).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-image">IMAGE</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Zdroje (Sources)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">width</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 32 | Rozsah: 8-512 | Šířka obrázku v pixelech</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">height</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 32 | Rozsah: 8-512 | Výška obrázku v pixelech</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- KÓDOVAČE -->
+            <div class="category" id="kodovace">
+                <div class="category-title">🔀 2. Kódovače (Encoders)</div>
+                <p style="margin-bottom: 20px; color: #666;">Kódovače transformují vstupní data do jiného formátu nebo reprezentace.</p>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔀</div>
+                        <div class="node-title">
+                            <div class="node-name">BaseConv</div>
+                            <div class="node-type">BaseConverterNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Převod mezi číslenými soustavami (2-36).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-numeric">NUMERIC</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kódovače (Encoders)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">from_base</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 10 | Rozsah: 2-36 | Zdrojová číselná soustava</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">to_base</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 2 | Rozsah: 2-36 | Cílová číselná soustava</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">signed</div>
+                            <div class="param-details">Typ: BOOLEAN | Výchozí: false | Použít záporné číslo</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">word_size</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 8 | Rozsah: 4-64 | Bitová šířka pro záporná čísla</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔤</div>
+                        <div class="node-title">
+                            <div class="node-name">UTF-8 Enc</div>
+                            <div class="node-type">Utf8EncoderNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Zakóduje text do UTF-8 bytů.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kódovače (Encoders)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Tento uzel nemá konfigurovatelné parametry.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📻</div>
+                        <div class="node-title">
+                            <div class="node-name">Morse</div>
+                            <div class="node-type">MorseEncoderNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Zakóduje text do Morseovy abecedy.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-morse">MORSE</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kódovače (Encoders)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">wpm</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 20 | Rozsah: 5-100 | Rychlost ve slovech za minutu (WPM)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🌳</div>
+                        <div class="node-title">
+                            <div class="node-name">HuffmanEnc</div>
+                            <div class="node-type">HuffmanEncoderNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Huffmanovo kódování s kompresí.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-huffman">HUFFMAN</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kódovače (Encoders)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Automaticky vypočítá optimální kódy na základě vstupních dat.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔐</div>
+                        <div class="node-title">
+                            <div class="node-name">Base64</div>
+                            <div class="node-type">Base64EncoderNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Base64 kódování binárních dat.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-base64">BASE64</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kódovače (Encoders)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">url_safe</div>
+                            <div class="param-details">Typ: BOOLEAN | Výchozí: false | Použít URL-safe variantu Base64</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔢</div>
+                        <div class="node-title">
+                            <div class="node-name">Hex</div>
+                            <div class="node-type">HexEncoderNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Hexadecimální kódování binárních dat.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-hex">HEX</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kódovače (Encoders)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Tento uzel nemá konfigurovatelné parametry.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DEKÓDOVAČE -->
+            <div class="category" id="dekodovace">
+                <div class="category-title">🔁 3. Dekódovače (Decoders)</div>
+                <p style="margin-bottom: 20px; color: #666;">Dekódovače převádějí data zpět do původního formátu.</p>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📻</div>
+                        <div class="node-title">
+                            <div class="node-name">MorseDec</div>
+                            <div class="node-type">MorseDecoderNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Dekóduje Morseův kód zpět na text.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-morse">MORSE</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Dekódovače (Decoders)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Tento uzel nemá konfigurovatelné parametry.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔤</div>
+                        <div class="node-title">
+                            <div class="node-name">UTF-8Dec</div>
+                            <div class="node-type">Utf8DecoderNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Dekóduje UTF-8 byty zpět na text.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Dekódovače (Decoders)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Tento uzel nemá konfigurovatelné parametry.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔐</div>
+                        <div class="node-title">
+                            <div class="node-name">Base64Dec</div>
+                            <div class="node-type">Base64DecoderNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Dekóduje Base64 zpět na binární data.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-base64">BASE64</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Dekódovače (Decoders)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Tento uzel nemá konfigurovatelné parametry.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🌳</div>
+                        <div class="node-title">
+                            <div class="node-name">HuffmanDec</div>
+                            <div class="node-type">HuffmanDecoderNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Dekóduje Huffmanovo kódování zpět na původní text.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-huffman">HUFFMAN</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Dekódovače (Decoders)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Automaticky použije kódovou tabulku z enkodéru.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- KOMPRESE -->
+            <div class="category" id="komprese">
+                <div class="category-title">🗜️ 4. Komprese (Compressors)</div>
+                <p style="margin-bottom: 20px; color: #666;">Kompresní algoritmy redukují velikost dat.</p>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📏</div>
+                        <div class="node-title">
+                            <div class="node-name">RLE</div>
+                            <div class="node-type">RLECompressorNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Run-Length Encoding - komprese/dekomprese opakujících se sekvencí.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span> → <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Komprese (Compressors)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">mode</div>
+                            <div class="param-details">Typ: VOLBA | Výchozí: compress | Možnosti: compress, decompress | Režim komprese/dekomprese</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🗜️</div>
+                        <div class="node-title">
+                            <div class="node-name">LZ77</div>
+                            <div class="node-type">LZ77CompressorNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">LZ77 komprese s nastavitelným oknem.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span> → <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Komprese (Compressors)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">window_size</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 4096 | Rozsah: 128-32768 | Krok: 128 | Velikost vyhledávacího okna</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🗜️</div>
+                        <div class="node-title">
+                            <div class="node-name">LZW</div>
+                            <div class="node-type">LZWCompressorNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">LZW slovníková komprese.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span> → <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Komprese (Compressors)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Tento uzel nemá konfigurovatelné parametry.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🌳</div>
+                        <div class="node-title">
+                            <div class="node-name">Huffman</div>
+                            <div class="node-type">HuffmanCompressorNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Huffmanova komprese s adaptivní kódovou tabulkou.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span> → <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Komprese (Compressors)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Automaticky vypočítá optimální kódy na základě frekvence symbolů.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- KANÁLY -->
+            <div class="category" id="kanaly">
+                <div class="category-title">📡 5. Kanály (Channels)</div>
+                <p style="margin-bottom: 20px; color: #666;">Komunikační kanály s modelováním šumu a chyb.</p>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔌</div>
+                        <div class="node-title">
+                            <div class="node-name">Ideal</div>
+                            <div class="node-type">IdealChannelNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Ideální kanál bez šumu, pouze s nastavitelnou latencí.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span> → <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kanály (Channels)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">latency_ms</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 10 | Rozsah: 0-10000 | Jednotka: ms | Latence kanálu v milisekundách</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📡</div>
+                        <div class="node-title">
+                            <div class="node-name">BSK</div>
+                            <div class="node-type">BSKChannelNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Binární symetrický kanál s nastavitelnou pravděpodobností chyby.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span> → <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kanály (Channels)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">error_prob</div>
+                            <div class="param-details">Typ: FLOAT | Výchozí: 0.05 | Rozsah: 0.0-1.0 | Krok: 0.01 | Pravděpodobnost bitové chyby</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">latency_ms</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 5 | Rozsah: 0-10000 | Jednotka: ms | Latence kanálu</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📡</div>
+                        <div class="node-title">
+                            <div class="node-name">Gilbert-Elliott</div>
+                            <div class="node-type">GilbertElliottChannelNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Kanál s nárazy chyb (burst errors).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span> → <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kanály (Channels)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">p_good</div>
+                            <div class="param-details">Typ: FLOAT | Výchozí: 0.05 | Rozsah: 0.0-1.0 | Krok: 0.01 | Pravděpodobnost chyby v dobrém stavu</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">p_bad</div>
+                            <div class="param-details">Typ: FLOAT | Výchozí: 0.3 | Rozsah: 0.0-1.0 | Krok: 0.01 | Pravděpodobnost chyby ve špatném stavu</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">k_burst</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 3 | Rozsah: 1-100 | Průměrná délka nárazu v bajtech</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📡</div>
+                        <div class="node-title">
+                            <div class="node-name">AWGN</div>
+                            <div class="node-type">AWGNChannelNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Kanál s Gaussovým šumem (Additive White Gaussian Noise).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span> → <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kanály (Channels)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">snr_db</div>
+                            <div class="param-details">Typ: FLOAT | Výchozí: 20.0 | Rozsah: -10-50 | Krok: 1 | Jednotka: dB | Poměr signál/šum v decibelech</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- OPRAVA CHYB -->
+            <div class="category" id="ecc">
+                <div class="category-title">🔴 6. Oprava chyb (ECC)</div>
+                <p style="margin-bottom: 20px; color: #666;">Algoritmy pro detekci a opravu chyb v přenosu dat.</p>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔴</div>
+                        <div class="node-title">
+                            <div class="node-name">Hamming(7,4)</div>
+                            <div class="node-type">Hamming74Node</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Kódování/dekódování Hamming(7,4) - opravuje 1 bit na 7.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span> → <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Oprava chyb (ECC)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">mode</div>
+                            <div class="param-details">Typ: VOLBA | Výchozí: encode | Možnosti: encode, decode | Režim kódování/dekódování</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔴</div>
+                        <div class="node-title">
+                            <div class="node-name">Hamming(15,11)</div>
+                            <div class="node-type">Hamming1511Node</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Kódování/dekódování Hamming(15,11) - opravuje 1 bit na 15.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span> → <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Oprava chyb (ECC)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">mode</div>
+                            <div class="param-details">Typ: VOLBA | Výchozí: encode | Možnosti: encode, decode | Režim kódování/dekódování</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔴</div>
+                        <div class="node-title">
+                            <div class="node-name">CRC-8/16/32</div>
+                            <div class="node-type">CRC8Node, CRC16Node, CRC32Node</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Kontrolní součet CRC (Cyclic Redundancy Check).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span> → <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Oprava chyb (ECC)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Každý uzel (CRC-8, CRC-16, CRC-32) má pevně danou velikost kontrolního součtu.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔴</div>
+                        <div class="node-title">
+                            <div class="node-name">ParityEnc/Dec</div>
+                            <div class="node-type">ParityEncoderNode, ParityDecoderNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Parnostní bity (sudá/lichá) pro detekci chyb.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span> → <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Oprava chyb (ECC)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">parity_type</div>
+                            <div class="param-details">Typ: VOLBA | Výchozí: even | Možnosti: even, odd | Typ parity (sudá/lichá)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔴</div>
+                        <div class="node-title">
+                            <div class="node-name">RS Enc/Dec</div>
+                            <div class="node-type">ReedSolomonEncoderNode, ReedSolomonDecoderNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Reed-Solomon kódování (zjednodušená verze).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-binary">BINARY</span> → <span class="data-type type-binary">BINARY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Oprava chyb (ECC)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">n</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 15 | Rozsah: 3-255 | Délka kódového slova (pouze u Enc)</div>
+                        </div>
+                        <div class="param-item">
+                            <div class="param-name">k</div>
+                            <div class="param-details">Typ: INTEGER | Výchozí: 11 | Rozsah: 1-253 | Délka datových bitů</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ANALYZÉRY -->
+            <div class="category" id="analyza">
+                <div class="category-title">📊 7. Analyzátory (Analyzers)</div>
+                <p style="margin-bottom: 20px; color: #666;">Analyzátory měří a vyhodnocují vlastnosti dat.</p>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📊</div>
+                        <div class="node-title">
+                            <div class="node-name">Entropie</div>
+                            <div class="node-type">EntropyMeterNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Měření Shannonovy entropie dat.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span> → <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Analyzátory (Analyzers)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Vypočítá Shannonovu entropii, maximální entropii a účinnost.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📈</div>
+                        <div class="node-title">
+                            <div class="node-name">Histogram</div>
+                            <div class="node-type">HistogramNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Frekvenční histogram symbolů v datech.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span> → <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Analyzátory (Analyzers)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Vypočítá frekvenci výskytu každého symbolu.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📊</div>
+                        <div class="node-title">
+                            <div class="node-name">CompRatio</div>
+                            <div class="node-type">CompressionRatioNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Měření kompresního poměru.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span> → <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Analyzátory (Analyzers)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Zobrazí poměr mezi vstupní a výstupní velikostí.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📊</div>
+                        <div class="node-title">
+                            <div class="node-name">BER Meter</div>
+                            <div class="node-type">BERMeterNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Měření bitové chybovosti (Bit Error Rate).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span> → <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Analyzátory (Analyzers)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Sleduje celkový počet bitů a chyb pro výpočet BER.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">⏱️</div>
+                        <div class="node-title">
+                            <div class="node-name">LatencyMeter</div>
+                            <div class="node-type">LatencyMeterNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Měření zpoždění v kanálech.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span> → <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Analyzátory (Analyzers)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Měří a ukládá latence pro výpočet průměru.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- VÝSTUPY -->
+            <div class="category" id="vystupy">
+                <div class="category-title">💾 8. Výstupy (Sinks)</div>
+                <p style="margin-bottom: 20px; color: #666;">Výstupní uzly pro zobrazení nebo uložení výsledků.</p>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📄</div>
+                        <div class="node-title">
+                            <div class="node-name">TextOut</div>
+                            <div class="node-type">TextOutputNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Zobrazí textový výstup v inspectoru.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Výstupy (Sinks)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Zobrazí text v panelu inspektoru.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">💾</div>
+                        <div class="node-title">
+                            <div class="node-name">Soubor</div>
+                            <div class="node-type">FileSinkNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Uloží data do souboru na disku.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Výstupy (Sinks)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">filename</div>
+                            <div class="param-details">Typ: TEXT | Výchozí: "output.bin" | Cesta k výstupnímu souboru</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🖥️</div>
+                        <div class="node-title">
+                            <div class="node-name">Konzole</div>
+                            <div class="node-type">ConsoleSinkNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Vypíše data do konzole/terminálu.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Výstupy (Sinks)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Vypíše prvních 100 znaků do konzole.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔢</div>
+                        <div class="node-title">
+                            <div class="node-name">HexDump</div>
+                            <div class="node-type">HexDumpSinkNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Vypíše data ve formátu hexadecimálního dumpu.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Výstupy (Sinks)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Vypíše prvních 50 hex párů do konzole.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">⚖️</div>
+                        <div class="node-title">
+                            <div class="node-name">Compare</div>
+                            <div class="node-type">ComparisonSinkNode</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Porovná dva vstupy (A/B testování).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstupní porty</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span> (in_a, in_b)
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Výstupní port</div>
+                            <div class="detail-content">
+                                <span class="data-type type-any">ANY</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Výstupy (Sinks)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Porovná data na porte in_a a in_b.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- KONTROLNÍ ČÍSLICE -->
+            <div class="category" id="kontrolni">
+                <div class="category-title">✅ 9. Kontrolní číslice (Checksums)</div>
+                <p style="margin-bottom: 20px; color: #666;">Validace kontrolních číslic pro různé standardy.</p>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">✅</div>
+                        <div class="node-title">
+                            <div class="node-name">EAN Validator</div>
+                            <div class="node-type">EANValidator</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Validace EAN-13/EAN-8 čárových kódů.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span> → <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kontrolní číslice (Checksums)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">ean_type</div>
+                            <div class="param-details">Typ: VOLBA | Výchozí: EAN-13 | Možnosti: EAN-13, EAN-8 | Typ EAN kódu</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📚</div>
+                        <div class="node-title">
+                            <div class="node-name">ISBN Validator</div>
+                            <div class="node-type">ISBNValidator</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Validace ISBN-10/ISBN-13 identifikátorů knih.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span> → <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kontrolní číslice (Checksums)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">isbn_type</div>
+                            <div class="param-details">Typ: VOLBA | Výchozí: ISBN-13 | Možnosti: ISBN-13, ISBN-10 | Typ ISBN standardu</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">📰</div>
+                        <div class="node-title">
+                            <div class="node-name">ISSN Validator</div>
+                            <div class="node-type">ISSNValidator</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Validace ISSN identifikátorů periodik.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span> → <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kontrolní číslice (Checksums)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Očekává 8 znaků (7 číslic + kontrolní znak).</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">💳</div>
+                        <div class="node-title">
+                            <div class="node-name">Luhn Validator</div>
+                            <div class="node-type">LuhnValidator</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Validace Luhn algoritmu (kreditní karty, IČO).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span> → <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kontrolní číslice (Checksums)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Validuje čísla pomocí Luhn algoritmu.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🔢</div>
+                        <div class="node-title">
+                            <div class="node-name">Verhoeff Validator</div>
+                            <div class="node-type">VerhoeffValidator</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Validace Verhoeff algoritmu.</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span> → <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kontrolní číslice (Checksums)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Validuje čísla pomocí Verhoeff algoritmu.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">🏢</div>
+                        <div class="node-title">
+                            <div class="node-name">IČO Validator</div>
+                            <div class="node-type">ICOValidator</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Validace IČO (české identifikační číslo osoby).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span> → <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kontrolní číslice (Checksums)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Očekává 8 číslic.</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="node-card">
+                    <div class="node-header">
+                        <div class="node-icon">👤</div>
+                        <div class="node-title">
+                            <div class="node-name">RC Validator</div>
+                            <div class="node-type">RCCalculator</div>
+                        </div>
+                    </div>
+                    <div class="node-description">Validace rodného čísla (české).</div>
+                    
+                    <div class="node-details">
+                        <div class="detail-box">
+                            <div class="detail-label">Vstup/Výstup</div>
+                            <div class="detail-content">
+                                <span class="data-type type-text">TEXT</span> → <span class="data-type type-text">TEXT</span>
+                            </div>
+                        </div>
+                        <div class="detail-box">
+                            <div class="detail-label">Kategorie</div>
+                            <div class="detail-content">Kontrolní číslice (Checksums)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="parameters">
+                        <div class="parameters-title">⚙️ Parametry:</div>
+                        <div class="param-item">
+                            <div class="param-name">(žádné parametry)</div>
+                            <div class="param-details">Očekává 9 nebo 10 číslic (starý/nový formát).</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>InfoFlowLab v1.0</strong> - Simulátor komprese a komunikace</p>
+            <p style="opacity: 0.7; margin-top: 10px;">Kompletní katalog prvků | Poslední aktualizace: 1. 7. 2026</p>
+            <p style="margin-top: 15px;">
+                <a href="NAPOVEDA_PROPOJENI.html" style="color: #4ec9b0; text-decoration: none; font-weight: bold;">
+                    ← Zpět na nápovědu k propojování
+                </a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
