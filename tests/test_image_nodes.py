@@ -11,31 +11,11 @@ Image = pytest.importorskip("PIL.Image", reason="Pillow not installed")
 import io
 
 # Add src to path
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src'))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Import directly from module files to avoid circular imports
-# Import packet directly from file
-import importlib.util
-spec = importlib.util.spec_from_file_location("packet", "src/core/packet.py")
-packet_module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(packet_module)
-
-# Import source nodes directly from file
-spec2 = importlib.util.spec_from_file_location("sources", "src/nodes/sources.py")
-sources_module = importlib.util.module_from_spec(spec2)
-sys.modules['src.nodes.sources'] = sources_module
-spec2.loader.exec_module(sources_module)
-
-# Import sink nodes directly from file  
-spec3 = importlib.util.spec_from_file_location("sinks", "src/nodes/sinks.py")
-sinks_module = importlib.util.module_from_spec(spec3)
-sys.modules['src.nodes.sinks'] = sinks_module
-spec3.loader.exec_module(sinks_module)
-
-# Get classes directly from modules
-DataPacket = packet_module.DataPacket
-ImageSourceNode = sources_module.ImageSourceNode
-ImageOutputNode = sinks_module.ImageOutputNode
+from src.core.packet import DataPacket
+from src.nodes.sources import ImageSourceNode
+from src.nodes.sinks import ImageOutputNode
 
 
 def create_test_image(path: str, size: tuple = (100, 100)):

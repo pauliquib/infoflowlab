@@ -9,7 +9,7 @@ import time
 
 import pytest
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 @pytest.mark.xfail(reason="canvas._animate_packets() was replaced by the new animation system", strict=False)
 def test_canvas_performance():

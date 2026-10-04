@@ -5,18 +5,13 @@ This verifies the educational categories and accordion functionality.
 """
 
 import sys
+import os
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import Qt
 
-# Add src to path and import directly to avoid circular imports
-sys.path.insert(0, 'src')
-import importlib.util
-spec = importlib.util.spec_from_file_location("sidebar", "src/gui/sidebar.py")
-sidebar_module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(sidebar_module)
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-Sidebar = sidebar_module.Sidebar
-CategoryPanel = sidebar_module.CategoryPanel
+from src.gui.sidebar import Sidebar, CategoryPanel
 
 
 def test_category_structure():

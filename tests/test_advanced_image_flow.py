@@ -11,41 +11,14 @@ Image = pytest.importorskip("PIL.Image", reason="Pillow not installed")
 import io
 
 # Add src to path
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'src'))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Import directly from module files to avoid circular imports
-import importlib.util
-
-# Import packet directly
-spec = importlib.util.spec_from_file_location("packet", "src/core/packet.py")
-packet_module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(packet_module)
-
-# Import image nodes
-spec2 = importlib.util.spec_from_file_location("image_nodes", "src/nodes/image_nodes.py")
-image_nodes_module = importlib.util.module_from_spec(spec2)
-sys.modules['src.nodes.image_nodes'] = image_nodes_module
-spec2.loader.exec_module(image_nodes_module)
-
-# Import source nodes
-spec3 = importlib.util.spec_from_file_location("sources", "src/nodes/sources.py")
-sources_module = importlib.util.module_from_spec(spec3)
-sys.modules['src.nodes.sources'] = sources_module
-spec3.loader.exec_module(sources_module)
-
-# Import sink nodes
-spec4 = importlib.util.spec_from_file_location("sinks", "src/nodes/sinks.py")
-sinks_module = importlib.util.module_from_spec(spec4)
-sys.modules['src.nodes.sinks'] = sinks_module
-spec4.loader.exec_module(sinks_module)
-
-# Get classes
-DataPacket = packet_module.DataPacket
-ImageSourceNode = sources_module.ImageSourceNode
-ImageOutputNode = sinks_module.ImageOutputNode
-ImageBlockLossNode = image_nodes_module.ImageBlockLossNode
-ImageTransformNode = image_nodes_module.ImageTransformNode
-ImageComparatorNode = image_nodes_module.ImageComparatorNode
+from src.core.packet import DataPacket
+from src.nodes.sources import ImageSourceNode
+from src.nodes.sinks import ImageOutputNode
+from src.nodes.image_nodes import (
+    ImageBlockLossNode, ImageTransformNode, ImageComparatorNode,
+)
 
 
 def create_test_image(path: str, size: tuple = (100, 100), color: str = 'red'):
