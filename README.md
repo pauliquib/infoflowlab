@@ -2,6 +2,8 @@
 
 **InfoFlowLab** je interaktivní simulátor komprese a komunikace pro vizuální návrh a testování datových toků. Aplikace umožňuje uživatelům vytvářet grafy z uzlů (nodes), propojovat je a simulovat přenos dat v reálném čase.
 
+![InfoFlowLab — simulace toku Text → UTF-8 → UTF-8Dec](docs/screenshot.png)
+
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![PySide6](https://img.shields.io/badge/PySide6-6.5%2B-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
