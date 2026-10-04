@@ -4,6 +4,7 @@
 
 ![InfoFlowLab — simulace toku Text → UTF-8 → UTF-8Dec](docs/screenshot.png)
 
+![CI](https://github.com/pauliquib/infoflowlab/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![PySide6](https://img.shields.io/badge/PySide6-6.5%2B-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
