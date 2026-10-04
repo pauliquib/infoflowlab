@@ -18,7 +18,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QPixmap, QPainter, QPen, QBrush, QColor
 from PySide6.QtCore import (
-    Qt, QTimer, QPointF, QRectF, Signal, QEvent, QSize, QObject
+    Qt, QTimer, QPoint, QPointF, QRectF, Signal, QEvent, QSize, QObject
 )
 from PySide6.QtGui import (
     QPainter, QPen, QBrush, QColor, QPainterPath, QTransform,
