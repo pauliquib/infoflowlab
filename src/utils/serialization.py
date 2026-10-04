@@ -8,7 +8,6 @@ from typing import Dict, Any, Optional, TYPE_CHECKING
 from pathlib import Path
 
 from src.core.graph import Graph
-from src.nodes.registry import build_node_factory
 
 if TYPE_CHECKING:
     from src.core.engine import SimulationEngine
@@ -71,6 +70,9 @@ class ScenarioLoader:
         try:
             graph = Graph()
             graph_data = data.get("graph", data)
+            # Lazy import to avoid circular dependency:
+            # utils.serialization -> nodes.registry -> nodes.* -> core -> utils
+            from src.nodes.registry import build_node_factory
             node_factory = build_node_factory()
             graph.from_dict(graph_data, node_factory)
             return graph
