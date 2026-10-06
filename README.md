@@ -1,6 +1,6 @@
 # InfoFlowLab
 
-**InfoFlowLab** je interaktivní simulátor komprese a komunikace pro vizuální návrh a testování datových toků. Aplikace umožňuje uživatelům vytvářet grafy z uzlů (nodes), propojovat je a simulovat přenos dat v reálném čase.
+**InfoFlowLab** is an interactive compression and communication simulator for visually designing and testing data flows. You build graphs from nodes, connect them, and simulate data transfer in real time.
 
 ![InfoFlowLab — simulace toku Text → UTF-8 → UTF-8Dec](docs/screenshot.png)
 
@@ -9,171 +9,171 @@
 ![PySide6](https://img.shields.io/badge/PySide6-6.5%2B-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
 
-*Veřejný snapshot — vývoj probíhá v privátním repozitáři, historie commitů je zde squashnutá.*
+*Public snapshot — development happens in a private repository; the commit history is squashed here.*
 
-## Otevřená webová kniha
+## Open web book
 
-**InfoFlowLab je kanonická hloubka** pro teorii informace a cvičení. Webová kniha algoritmy **nepřepisuje** — má jen rozcestník:
+**InfoFlowLab is the canonical depth** for information theory and exercises. The web book does **not** rewrite the algorithms; it only provides a signpost:
 
-*InfoFlowLab — rozcestník (ne učebnice)* — související webová kniha je vedena jako samostatný projekt.
+*InfoFlowLab — a signpost, not a textbook* — the related web book is maintained as a separate project.
 
-## 🎯 Účel
+## 🎯 Purpose
 
-InfoFlowLab je navržen pro:
-- **Vzdělávací účely** - Studenti informačních systémů a teorie přenosu informací
-- **Vizualizaci datových toků** - Interaktivní návrh komunikačních řetězců
-- **Testování algoritmů** - Komprese, kódování, ECC, kontrolní součty
-- **Simulaci komunikace** - Kanály se šumem, zpožděním, ztrátami
+InfoFlowLab is designed for:
+- **Education** - Students of information systems and information transmission theory
+- **Visualising data flows** - Interactive design of communication chains
+- **Testing algorithms** - Compression, encoding, ECC, checksums
+- **Simulating communication** - Channels with noise, delay and loss
 
-## ✨ Hlavní funkce
+## ✨ Main features
 
-### 🎨 Vizuální editor
-- **Drag & Drop** - Přetahování uzlů ze sidebaru na canvas
-- **Propojování portů** - Klikněte na port a táhněte k jinému portu
-- **Zoom a posun** - Ctrl+Scroll pro zoom, middle mouse pro posun
-- **Automatické mazání** - Delete/Backspace pro smazání vybraného prvku
+### 🎨 Visual editor
+- **Drag & drop** - Drag nodes from the sidebar onto the canvas
+- **Connecting ports** - Click a port and drag it to another port
+- **Zoom and pan** - Ctrl+Scroll to zoom, middle mouse button to pan
+- **Deleting** - Delete/Backspace removes the selected element
 
-### 🔧 Simulace
-- **Režimy simulace**:
-  - ▶️ **Real-time** - Spuštění v reálném čase
-  - ⏸️ **Pause/Resume** - Pozastavení a pokračování
-  - ⏭️ **Step** - Krok po kroku pro vzdělávací účely
-- **Nastavitelná rychlost** - 0.1x až 5.0x
-- **Tick interval** - 10ms až 1000ms
-- **Injektování paketů** - Ruční vložení testovacích dat
+### 🔧 Simulation
+- **Simulation modes:**
+  - ▶️ **Real-time** - Run in real time
+  - ⏸️ **Pause/Resume** - Pause and continue
+  - ⏭️ **Step** - Step by step, for teaching
+- **Adjustable speed** - 0.1x to 5.0x
+- **Tick interval** - 10 ms to 1000 ms
+- **Injecting packets** - Insert test data by hand
 
-### 📦 Kategorie uzlů (30+ typů)
+### 📦 Node categories (30+ types)
 
-#### 📝 Zdroje (Sources)
-- **TextSource** - Vstup textu
-- **RandomSource** - Náhodná data s nastavitelnou entropií
-- **NumberInput** - Číselné hodnoty v různých soustavách
+#### 📝 Sources
+- **TextSource** - Text input
+- **RandomSource** - Random data with adjustable entropy
+- **NumberInput** - Numeric values in different bases
 
-#### 🔀 Kódování (Encoders)
-- **Base64** - Base64 kódování/dekódování
-- **Hex** - Hexadecimální převod
-- **BaseConverter** - Převod mezi číslenými soustavami
-- **UTF-8** - UTF-8 kódování
-- **Morse** - Morseova abeceda
-- **Huffman** - Huffmanovo kódování
+#### 🔀 Encoders
+- **Base64** - Base64 encoding and decoding
+- **Hex** - Hexadecimal conversion
+- **BaseConverter** - Conversion between number bases
+- **UTF-8** - UTF-8 encoding
+- **Morse** - Morse code
+- **Huffman** - Huffman coding
 
-#### 🗜️ Komprese (Compressors)
-- **Huffman** - Huffmanova komprese
-- **RLE** - Run-Length Encoding
+#### 🗜️ Compressors
+- **Huffman** - Huffman compression
+- **RLE** - Run-length encoding
 
-#### 📡 Kanály (Channels)
-- **BSK** - Binární symetrický kanál se šumem
-- **Ideal** - Ideální kanál se zpožděním
+#### 📡 Channels
+- **BSK** - Binary symmetric channel with noise
+- **Ideal** - Ideal channel with delay
 
-#### 🔴 ECC (Error Correction)
-- **Hamming(7,4)** - Hammingův kód pro opravu 1-bitových chyb
-- **CRC32** - CRC kontrolní součet
+#### 🔴 ECC (error correction)
+- **Hamming(7,4)** - Hamming code for correcting 1-bit errors
+- **CRC32** - CRC checksum
 
-#### ✅ Kontrolní součty (Checksums)
-- **EAN-13** - Validace EAN-13 čárových kódů
-- **ISBN** - Validace ISBN-10/13
-- **ISSN** - Validace ISSN
-- **Luhn** - Luhnův algoritmus (kreditní karty)
-- **Verhoeff** - Verhoeffův algoritmus
+#### ✅ Checksums
+- **EAN-13** - EAN-13 barcode validation
+- **ISBN** - ISBN-10/13 validation
+- **ISSN** - ISSN validation
+- **Luhn** - Luhn algorithm (payment cards)
+- **Verhoeff** - Verhoeff algorithm
 
-#### 📊 Analyzátory (Analyzers)
-- **EntropyMeter** - Výpočet Shannonovy entropie
-- **Histogram** - Analýza frekvence znaků
+#### 📊 Analysers
+- **EntropyMeter** - Shannon entropy calculation
+- **Histogram** - Character frequency analysis
 
-#### 💾 Výstupy (Sinks)
-- **Console** - Výstup do konzole
-- **File** - Uložení do souboru
-- **HexDump** - Hexadecimální výpis
-- **TextOutput** - Textový výstup
+#### 💾 Sinks
+- **Console** - Output to the console
+- **File** - Save to a file
+- **HexDump** - Hexadecimal dump
+- **TextOutput** - Text output
 
-### 🎛️ Nástroje
-- **Console** - Barevný výpis logů s časovým razítkem
-- **Inspector** - Panel vlastností vybraného uzlu
-- **Profiling** - Výkonnostní profilování
-- **Save/Load** - Ukládání a načítání scénářů (JSON)
+### 🎛️ Tools
+- **Console** - Coloured log output with timestamps
+- **Inspector** - Properties panel for the selected node
+- **Profiling** - Performance profiling
+- **Save/Load** - Save and load scenarios (JSON)
 
-## 🚀 Rychlý start
+## 🚀 Quick start
 
-### Požadavky
+### Requirements
 
-- Python 3.8 nebo vyšší
-- PySide6 6.5.0 nebo vyšší
+- Python 3.8 or newer
+- PySide6 6.5.0 or newer
 
-### Instalace
+### Installation
 
 ```bash
-# Klonování repozitáře
+# Clone the repository
 git clone https://github.com/pauliquib/infoflowlab.git
 cd infoflowlab
 
-# Instalace závislostí
+# Install the dependencies
 pip install -e .
 
-# nebo s vývojovými závislostmi
+# or with the development dependencies
 pip install -e ".[dev]"
 
-# nebo se všemi závislostmi
+# or with all dependencies
 pip install -e ".[full]"
 ```
 
-### Spuštění
+### Running
 
 ```bash
-# Přímé spuštění
+# Run directly
 python main.py
 
-# nebo pomocí Makefile
+# or with the Makefile
 make run
 ```
 
-## 🧪 Testování
+## 🧪 Testing
 
 ```bash
-# Spuštění všech testů
+# Run all tests
 make test
 
-# nebo přímo s pytest
+# or directly with pytest
 pytest tests/ -v
 
-# S pokrytím kódu
+# With code coverage
 make test-cov
 
-# Pouze unit testy
+# Unit tests only
 make test-unit
 ```
 
-## 📚 Použití
+## 📚 Usage
 
-### Základní práce s aplikací
+### Basic use
 
-1. **Vytvoření uzlu**: Přetáhněte prvek ze sidebaru na canvas
-2. **Propojení**: Klikněte na výstupní port (vpravo) a táhněte k vstupnímu portu (vlevo)
-3. **Konfigurace**: Klikněte na uzel pro zobrazení vlastností v Inspectoru
-4. **Simulace**: Klikněte na ▶️ Play pro spuštění simulace
-5. **Krokování**: Použijte ⏭️ Step pro krok po kroku
+1. **Create a node**: drag an element from the sidebar onto the canvas
+2. **Connect**: click the output port (right) and drag to an input port (left)
+3. **Configure**: click a node to show its properties in the Inspector
+4. **Simulate**: click ▶️ Play to start the simulation
+5. **Stepping**: use ⏭️ Step to go one step at a time
 
-### Klávesové zkratky
+### Keyboard shortcuts
 
-| Klávesa | Akce |
+| Key | Action |
 |---------|------|
-| `Delete` / `Backspace` | Smazat vybraný prvek |
-| `Escape` | Zrušit propojování |
+| `Delete` / `Backspace` | Delete the selected element |
+| `Escape` | Cancel connecting |
 | `Ctrl + Scroll` | Zoom in/out |
-| `Middle Mouse` | Posun plátna |
+| `Middle Mouse` | Pan the canvas |
 
-### Ukládání a načítání
+### Saving and loading
 
 ```python
 from src.utils.serialization import export_scenario, import_scenario
 
-# Uložení scénáře
+# Save a scenario
 export_scenario(engine, "moj_scenar.json", "Můj scénář")
 
-# Načtení scénáře
+# Load a scenario
 engine = import_scenario("moj_scenar.json")
 ```
 
-## 🏗️ Architektura
+## 🏗️ Architecture
 
 ```
 ┌─────────────────────────────────────────┐
@@ -194,17 +194,17 @@ engine = import_scenario("moj_scenar.json")
 └─────────────────────────────────────────┘
 ```
 
-### Klíčové komponenty
+### Key components
 
-- **Graph** - Centrální úložiště grafu, spravuje uzly a spojení
-- **SimulationEngine** - Řídí simulaci datového toku
-- **NodeBase** - Základní třída pro všechny uzly
-- **DataPacket** - Datová struktura pro přenos informací
-- **Canvas** - Vizuální plátno pro úpravu grafu
+- **Graph** - Central store of the graph; manages nodes and connections
+- **SimulationEngine** - Drives the data-flow simulation
+- **NodeBase** - Base class for all nodes
+- **DataPacket** - Data structure for transferring information
+- **Canvas** - Visual canvas for editing the graph
 
-## 🛠️ Vývoj
+## 🛠️ Development
 
-### Struktura projektu
+### Project structure
 
 ```
 infoflowlab/
@@ -244,9 +244,9 @@ infoflowlab/
 └── assets/             # Ikony a obrázky
 ```
 
-### Přidání nového uzlu
+### Adding a new node
 
-1. Vytvořte třídu v `src/nodes/kategorie.py`:
+1. Create a class in `src/nodes/<category>.py`:
 ```python
 class MyNode(NodeBase):
     def __init__(self, node_id: str):
@@ -259,79 +259,79 @@ class MyNode(NodeBase):
         return new_packet
 ```
 
-2. Přidejte do `src/nodes/__init__.py`
+2. Add it to `src/nodes/__init__.py`
 
-3. Přidejte do `Canvas.add_node_at()` v `src/gui/canvas.py`
+3. Add it to `Canvas.add_node_at()` in `src/gui/canvas.py`
 
-### Dostupné příkazy
+### Available commands
 
 ```bash
-make help          # Zobrazí všechny dostupné příkazy
-make install       # Instalace balíčku
-make install-dev   # Instalace s vývojovými závislostmi
-make test          # Spuštění testů
-make lint          # Kontrola kódu (flake8)
-make format        # Formátování kódu (black)
-make typecheck     # Kontrola typů (mypy)
-make clean         # Vyčištění projektu
+make help          # Show all available commands
+make install       # Install the package
+make install-dev   # Install with development dependencies
+make test          # Run the tests
+make lint          # Check the code (flake8)
+make format        # Format the code (black)
+make typecheck     # Check types (mypy)
+make clean         # Clean the project
 ```
 
-## 📖 Dokumentace
+## 📖 Documentation
 
-- [Přehled projektu](docs/actualni_rozpracovanost.md)
-- [Architektura spojení](docs/CONNECTION_SYSTEM_ARCHITECTURE.md)
-- [Simulační engine](docs/SIMULATION_ENGINE_ARCHITECTURE.md)
-- [Nápověda k propojování](docs/NAPOVEDA_PROPOJENI.md)
-- [Logování a profilování](docs/logging_profiling.md)
+- [Project overview](docs/actualni_rozpracovanost.md) (Czech)
+- [Connection architecture](docs/CONNECTION_SYSTEM_ARCHITECTURE.md) (Czech)
+- [Simulation engine](docs/SIMULATION_ENGINE_ARCHITECTURE.md) (Czech)
+- [Connecting help](docs/NAPOVEDA_PROPOJENI.md) (Czech)
+- [Logging and profiling](docs/logging_profiling.md) (Czech)
 
-## 🐛 Známé problémy
+## 🐛 Known issues
 
-- Porty jsou malé (16px) - může být obtížné trefit
-- Animace paketů je lineární (ne po Bézierově křivce)
-- Chybí undo/redo funkce
-- Chybí export do PDF
+- Ports are small (16 px), so they can be hard to hit
+- Packet animation is linear (not along a Bézier curve)
+- No undo/redo
+- No PDF export
 
-## 🔮 Plánované vylepšení
+## 🔮 Planned improvements
 
-### Krátkodobé (1-2 týdny)
-- [ ] Undo/Redo pro akce na canvasu
-- [ ] Lepší detekce portů (zvětšit hit area)
-- [ ] Export grafu do obrázku
+### Short term (1–2 weeks)
+- [ ] Undo/redo for canvas actions
+- [ ] Better port detection (larger hit area)
+- [ ] Export the graph as an image
 - [ ] Zoom to fit
 
-### Střednědobé (1-2 měsíce)
-- [ ] Více typů uzlů
-- [ ] Plugin systém pro uživatelské uzly
-- [ ] Batch simulace
-- [ ] Statistiky a reporty
+### Medium term (1–2 months)
+- [ ] More node types
+- [ ] Plugin system for user-defined nodes
+- [ ] Batch simulation
+- [ ] Statistics and reports
 
-### Dlouhodobé (3+ měsíce)
-- [ ] Webová verze (WebAssembly)
-- [ ] Sdílení grafů (cloud)
-- [ ] Pokročilé vizualizace
+### Long term (3+ months)
+- [ ] Web version (WebAssembly)
+- [ ] Sharing graphs (cloud)
+- [ ] Advanced visualisations
 
-## 🤝 Přispění
+## 🤝 Contributing
 
-Příspěvky jsou vítány! Prosím:
+Contributions are welcome! Please:
 
-1. Forkněte repozitář
-2. Vytvořte feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commitujte změny (`git commit -m 'Add AmazingFeature'`)
-4. Pushněte do branch (`git push origin feature/AmazingFeature`)
-5. Otevřete Pull Request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📝 Licence
+## 📝 License
 
-Tento projekt je licencován pod MIT licencí - viz soubor [LICENSE](LICENSE) pro detaily.
+This project is licensed under the MIT licence — see [LICENSE](LICENSE) for details.
 
-## 👥 Autoři
+## 👥 Authors
 
-- **pauliquib** - *První verze*
+- **pauliquib** - *first version*
 
-## 📞 Kontakt
+## 📞 Contact
 
-Pokud máte otázky nebo návrhy, otevřete prosím issue na GitHubu.
+If you have questions or suggestions, please open an issue on GitHub.
 
 ---
 
-**InfoFlowLab v1.0** - Vytvořeno s ❤️ pro vzdělávání
+**InfoFlowLab v1.0** — made with ❤️ for education
