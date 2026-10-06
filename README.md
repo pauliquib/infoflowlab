@@ -167,7 +167,7 @@ make test-unit
 from src.utils.serialization import export_scenario, import_scenario
 
 # Save a scenario
-export_scenario(engine, "moj_scenar.json", "Můj scénář")
+export_scenario(engine, "my_scenario.json", "My scenario")
 
 # Load a scenario
 engine = import_scenario("moj_scenar.json")
@@ -181,7 +181,7 @@ engine = import_scenario("moj_scenar.json")
 │  - MainWindow, Canvas, Sidebar, Inspector│
 ├─────────────────────────────────────────┤
 │  Node vrstva (src/nodes/)               │
-│  - Konkrétní implementace uzlů          │
+│  - Concrete node implementations          │
 ├─────────────────────────────────────────┤
 │  Algoritmy (src/algorithms/)            │
 │  - Entropie, Huffman, Hamming, CRC...   │
@@ -209,13 +209,13 @@ engine = import_scenario("moj_scenar.json")
 ```
 infoflowlab/
 ├── src/
-│   ├── core/           # Jádro systému
+│   ├── core/           # Core system
 │   │   ├── graph.py
 │   │   ├── engine.py
 │   │   ├── node_base.py
 │   │   ├── port.py
 │   │   └── packet.py
-│   ├── nodes/          # Implementace uzlů
+│   ├── nodes/          # Node implementations
 │   │   ├── sources.py
 │   │   ├── encoders.py
 │   │   ├── compressors.py
@@ -235,13 +235,13 @@ infoflowlab/
 │   │   ├── canvas.py
 │   │   ├── sidebar.py
 │   │   └── inspector.py
-│   └── utils/          # Pomocné nástroje
+│   └── utils/          # Helper tools
 │       ├── serialization.py
 │       └── logger.py
 ├── tests/              # Test suite
 ├── docs/               # Dokumentace
 ├── logs/               # Logy
-└── assets/             # Ikony a obrázky
+└── assets/             # Icons and images
 ```
 
 ### Adding a new node
@@ -250,7 +250,7 @@ infoflowlab/
 ```python
 class MyNode(NodeBase):
     def __init__(self, node_id: str):
-        super().__init__(node_id, "category", "Název")
+        super().__init__(node_id, "category", "Name")
         self.add_input("in")
         self.add_output("out")
     
